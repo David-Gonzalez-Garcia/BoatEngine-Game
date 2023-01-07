@@ -5,49 +5,56 @@ function App() {
 
     const initialState = {engineRunning: false, gear: 0, speed:0, error: null}
     
-
-    const boatReducer = (previousState, action   ) =>{
-
-        if(action.type === 'start') {
-            return (
+    const boatReducer = (previousState, action) => {
+        if (action.type === 'start') {
+          return (
             Math.random() < 0.5 ? {
-                ...initialState,
-                engineRunning: false,
-                error: 'The engine failed to start'
-              } : {
-                ...initialState,
-                engineRunning: true,
-                error: null
-              })
-            }
-
-            if (action.type==='stop') {
-            return {
-                ...initialState,
-                engineRunning: false,
-                gear: 0,
-                error: null
-              }
+              ...previousState,
+              engineRunning: false,
+              error: 'The engine failed to start',
+            } : {
+              ...previousState,
+              engineRunning: true,
+            });
         }
-
-            if (action.type==='gear up') {
-            return (initialState.engineRunning === true && initialState.gear < 5 ? previousState.gear + 1 : null)
+        if (action.type === 'stop') {
+          return {
+            ...previousState,
+            engineRunning: false,
+            gear: 0,
+          };
         }
-
-            if (action.type==='gear down') {
-            return (initialState.engineRunning === true && initialState.gear > -2 ? previousState.gear - 1 : null)
+        if (action.type === 'gear up') {
+          return (previousState.engineRunning === true && previousState.gear < 5 ? {
+            ...previousState,
+            gear: previousState.gear + 1,
+          } : null);
         }
-           
-           if (action.type==='increase speed') {
-            return (initialState.engineRunning === true && initialState.gear !== 0 ? previousState.speed + 1 
-                    : initialState.gear > 0 ? initialState.speed += previousState.gear * 0.1
-                    : initialState.gear < 0 ? initialState.speed += previousState.gear * 0.2
-                    : null)
-           }
-
-           if (action.type==='decrease speed') {
-            return (initialState.engineRunning === true && initialState.gear !== 0 && initialState.speed >= 0 ? previousState.speed - 1 : null)
-           }
+        if (action.type === 'gear down') {
+          return (previousState.engineRunning === true && previousState.gear > -2 ? {
+            ...previousState,
+            gear: previousState.gear - 1,
+          } : null);
+        }
+        if (action.type === 'increase speed') {
+          return (previousState.engineRunning === true && previousState.gear !== 0 ? {
+            ...previousState,
+            speed: previousState.speed + 1,
+          } : previousState.gear > 0 ? {
+            ...previousState,
+            speed: previousState.speed + previousState.gear * 0.1,
+          } : previousState.gear < 0 ? {
+            ...previousState,
+            speed: previousState.speed + previousState.gear * 0.2,
+          } : null);
+        }
+        if (action.type === 'decrease speed') {
+          return (previousState.engineRunning === true && previousState.gear !== 0 && previousState.speed >= 0 ? {
+            ...previousState,
+            speed: previousState.speed - 1,
+          } : null);
+        }
+      };
 
         
     const [state, dispatch] =useReducer(boatReducer, initialState)
@@ -55,7 +62,7 @@ function App() {
     return (
         <div className="App">
 
-        <h3>Engine is running:{engineRunning ? 'Yes' : 'No'} {error && <p>{error}</p>}</h3>
+        <h3>Engine is running:{initialState.engineRunning ? 'Yes' : 'No'} {initialState.error && <p>{initialState.error}</p>}</h3>
     
         <h3>Current speed of the boat is {state.speed}</h3>
 <div>
@@ -69,5 +76,5 @@ function App() {
         </div>
     )
 }
-}
+
 export default App;
