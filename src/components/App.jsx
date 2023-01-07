@@ -7,16 +7,16 @@ function App() {
     
     const boatReducer = (previousState, action) => {
         if (action.type === 'start') {
-          return (
-            Math.random() < 0.5 ? {
-              ...previousState,
-              engineRunning: false,
-              error: 'The engine failed to start',
-            } : {
-              ...previousState,
-              engineRunning: true,
-            });
-        }
+            return Math.random() < 0.5
+              ? {
+                  ...previousState,
+                  error: 'The engine failed to start',
+                }
+              : {
+                  ...previousState,
+                  engineRunning: true,
+                };
+          }
         if (action.type === 'stop') {
           return {
             ...previousState,
@@ -62,8 +62,8 @@ function App() {
     return (
         <div className="App">
 
-        <h3>Engine is running:{initialState.engineRunning ? 'Yes' : 'No'} {initialState.error && <p>{initialState.error}</p>}</h3>
-    
+        <h3>Engine is: {state.engineRunning ? 'ON' : 'OFF'} {state.error && <p>{state.error}</p>}</h3>
+        <h3>Gear: {state.gear}</h3>
         <h3>Current speed of the boat is {state.speed}</h3>
 <div>
     <button onClick={()=>dispatch({type:'start'})}>Start</button>
