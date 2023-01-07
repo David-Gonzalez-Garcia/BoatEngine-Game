@@ -1,7 +1,7 @@
 {
-  "name": "SPA-store-reducer",
+  "name": "spa-store-reducer",
   "version": "1.0.0",
-  "description": "",
+  "description": "I want you to create a boat interface using `useReducer`. You don't need to make many different components. Your reducer function should be able to do the following actions:",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start"
@@ -25,5 +25,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FbW-E05-B/28-spa-store-usereducerboating-David-Gonzalez-Garcia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FbW-E05-B/28-spa-store-usereducerboating-David-Gonzalez-Garcia/issues"
   }
 }
