@@ -14,7 +14,7 @@ function App() {
                 }
               : {
                   ...previousState,
-                  engineRunning: true,
+                  engineRunning: true
                 };
           }
         if (action.type === 'stop') {
@@ -28,31 +28,25 @@ function App() {
           return (previousState.engineRunning === true && previousState.gear < 5 ? {
             ...previousState,
             gear: previousState.gear + 1,
-          } : null);
+          } : previousState);
         }
         if (action.type === 'gear down') {
           return (previousState.engineRunning === true && previousState.gear > -2 ? {
             ...previousState,
             gear: previousState.gear - 1,
-          } : null);
+          } : previousState);
         }
         if (action.type === 'increase speed') {
           return (previousState.engineRunning === true && previousState.gear !== 0 ? {
             ...previousState,
-            speed: previousState.speed + 1,
-          } : previousState.gear > 0 ? {
-            ...previousState,
-            speed: previousState.speed + previousState.gear * 0.1,
-          } : previousState.gear < 0 ? {
-            ...previousState,
-            speed: previousState.speed + previousState.gear * 0.2,
-          } : null);
+            speed: previousState.gear > 0 ? previousState.gear === 5 ? previousState.speed + previousState.gear * 15 : previousState.speed + previousState.gear * 10 : previousState.gear === -2 ? previousState.speed - previousState.gear * 30 : previousState.speed - previousState.gear * 20,
+          } : previousState);
         }
         if (action.type === 'decrease speed') {
           return (previousState.engineRunning === true && previousState.gear !== 0 && previousState.speed >= 0 ? {
             ...previousState,
             speed: previousState.speed - 1,
-          } : null);
+          } : previousState);
         }
       };
 
@@ -61,18 +55,24 @@ function App() {
 
     return (
         <div className="App">
-
-        <h3>Engine is: {state.engineRunning ? 'ON' : 'OFF'} {state.error && <p>{state.error}</p>}</h3>
-        <h3>Gear: {state.gear}</h3>
-        <h3>Current speed of the boat is {state.speed}</h3>
+        {state.error && !state.engineRunning && <p>{state.error}</p>}
+        {state.engineRunning ? (
+        
 <div>
-    <button onClick={()=>dispatch({type:'start'})}>Start</button>
+    
     <button onClick={()=>dispatch({type:'stop'})}>Stop</button>
     <button onClick={()=>dispatch({type:'gear up'})}>Gear ↑</button>
     <button onClick={()=>dispatch({type:'gear down'})}>Gear ↓</button>
     <button onClick={()=>dispatch({type:'increase speed'})}>+ speed</button>
     <button onClick={()=>dispatch({type:'decrease speed'})}>- speed</button>
 </div>
+        ):(
+          
+        <button onClick={()=>dispatch({type:'start'})}>Start</button>
+        )}
+        <h3>Gear: {state.gear}</h3>
+        <h3>Current speed of the boat is {state.speed}</h3>
+        
         </div>
     )
 }
